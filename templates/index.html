@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Bangalore House Price Prediction</title>
+
+	<!-- Java Script -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="../static/app.js"></script>
+
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="../static/css/bootstrap.min.css" />
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="../static/css/style.css" />
+	<!--<script src="../../Jquery/prettify.js"></script>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+</head>
+
+<body>
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7 col-md-push-5">
+						<div class="booking-cta">
+							<h1>Predict Home Prices In Bangalore</h1>
+							<p>Now predict the price of homes as per your specifications at different locations in the city of Bangalore with the click of a button. 
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4 col-md-pull-7">
+						<div class="booking-form">
+							<form method="POST" accept-charset="utf-8" >
+								<div class="form-group">
+									<span class="form-label">Area (Square Feet)</span>
+									<input class="form-control" type="text" name="sqft" id="uiSqft" placeholder="Enter area in sqft">
+								</div>
+								
+								<div class="form-group">
+											<span class="form-label" >Location</span>
+											<select class="form-control" name="loc" id="uiLocations" >
+												<option value="" disabled="disabled" selected="selected">Choose a Location</option>
+												<option>Electronic City</option>
+												<option>Rajaji Nagar</option>
+											</select>
+											<span class="select-arrow"></span>
+								</div>
+							
+								
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<span class="form-label">BHK</span>
+											<select class="form-control" name="bhk" id="uiBHK">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+
+
+											</select>
+											<span class="select-arrow"></span>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<span class="form-label">Bathroom</span>
+											<select class="form-control" name="bath" id="uiBathrooms">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+											<span class="select-arrow"></span>
+										</div>
+									</div>
+									
+								</div>
+								<div class="form-btn"><center>
+									<button class="submit-btn" onclick="send_data()">Predict Price</button></center>
+								</div>
+								<center>
+								<div id="uiEstimatedPrice" class="result">	<h2><span id = "prediction">{{prediction_value}}</span></h2></div> </center>
+
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function form_handler(event){
+			event.preventDefault(); // Don't submit the form normally.
+		}
+
+
+		function send_data()
+		{
+			document.querySelector('form').addEventListener("submit", form_handler);
+
+			var fd=new FormData(document.querySelector('form'));
+			var xhr=new XMLHttpRequest();
+			xhr.open('POST', '/predict_home_price', true);
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == XMLHttpRequest.DONE){
+					document.getElementById('prediction').innerHTML = xhr.responseText + " Lakhs";
+				}
+				
+			};
+
+			//xhr.onload() = function(){};
+			xhr.send(fd);
+		};
+
+
+	</script>
+
+	
+
+
+
+
+
+</body>
+
+</html>
